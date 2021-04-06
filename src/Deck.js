@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Card from "./Card";
 import axios from "axios";
+import "./Deck.css";
 
 const API_BASE_URL = "http://deckofcardsapi.com/api/deck";
 
@@ -39,7 +40,6 @@ const Deck = () => {
 							image: cardRes.data.cards[0].image
 						}
 					]);
-					console.log(cardRes.data.cards[0].code);
 				} catch (e) {
 					console.log(e);
 				}
@@ -53,6 +53,7 @@ const Deck = () => {
 
 			return () => {
 				clearInterval(timerId.current);
+				timerId.current = null; // re-starts draws
 			};
 		},
 		[ autoDraw, setAutoDraw, deck, setCard ]
@@ -63,6 +64,7 @@ const Deck = () => {
 	};
 
 	const cards = card.map((c) => <Card name={c.name} image={c.image} key={c.name} />);
+
 	return (
 		<div className="Deck">
 			{deck ? (
